@@ -1,21 +1,21 @@
 <body>
   <div class="container">
     <header>
-      <h1>Todo List ({{incompleteCount}})</h1>
+      <h1>Что сделать? ({{incompleteCount}})</h1>
  
       <label class="hide-completed">
         <input type="checkbox" />
-       Hide Completed Tasks
+       Скрыть выполненные задания
       </label>
  
        {{> loginButtons}}
  
       {{#if currentUser}}
         <form class="new-task">
-          <input type="text" name="text" placeholder="Type to add new tasks" />
-           <input type="text" name="desc" placeholder="Description" />
+          <input type="text" name="text" placeholder="Введите новую задачу" />
+           <input type="text" name="desc" placeholder="Введите описание" />
            <input type="date" name="date" />
-           <input  type="submit" value="Add a task">
+           <input  type="submit" value="Добавить задачу">
         </form>
       {{/if}}
     </header>
