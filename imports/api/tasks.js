@@ -3,7 +3,7 @@ import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
  
 export const Tasks = new Mongo.Collection('tasks');
-
+ 
 if (Meteor.isServer) {
   // This code only runs on the server
   // Only publish tasks that are public or belong to the current user
@@ -18,16 +18,20 @@ if (Meteor.isServer) {
 }
  
 Meteor.methods({
-  'tasks.insert'(text) {
-    check(text, String);
- 
+  'tasks.insert'(text,desc, date) {
+      check(text, String);   
+      check(desc, String); 
+
     // Make sure the user is logged in before inserting a task
     if (! this.userId) {
       throw new Meteor.Error('not-authorized');
     }
+
  
     Tasks.insert({
       text,
+      desc,
+      date,
       createdAt: new Date(),
       owner: this.userId,
       username: Meteor.users.findOne(this.userId).username,
@@ -36,7 +40,7 @@ Meteor.methods({
   'tasks.remove'(taskId) {
     check(taskId, String);
  
-  const task = Tasks.findOne(taskId);
+    const task = Tasks.findOne(taskId);
     if (task.private && task.owner !== this.userId) {
       // If the task is private, make sure only the owner can delete it
       throw new Meteor.Error('not-authorized');
